@@ -66,3 +66,38 @@ It calls between() on the length. Negative limits raise ValueError.
 | 8 | max | True |
 | 9 | just above max | ValidationError |
 | 0 with min_val=0 | lowest allowed limit | True |
+
+## Module 3: email (src/validators/email.py)
+
+### Function: email(value, ipv4_address, ipv6_address, simple_host, rfc_1034, rfc_2782)
+Rejects empty values and anything without exactly one @. Username max 64
+characters, domain max 253. Username is checked with a regex (dots only
+between characters, no spaces). Domain is checked by the hostname validator.
+
+### ECP
+| Class | Sample | Expected |
+|---|---|---|
+| Plain valid | user@example.com | True |
+| Dot in username | first.last@example.com | True |
+| Plus tag | user+tag@example.com | True |
+| Subdomain | user@sub.example.com | True |
+| No @ | userexample.com | ValidationError |
+| Two @ | user@@example.com | ValidationError |
+| Missing domain | user@ | ValidationError |
+| Missing username | @example.com | ValidationError |
+| Space in username | user name@example.com | ValidationError |
+| Misplaced dots | .user@ / user.@ / us..er@ | ValidationError |
+| No top-level domain | user@example | ValidationError |
+| Empty / None | "" / None | ValidationError |
+| simple_host flag | user@localhost | True only with flag |
+| IP in brackets | user@[192.168.1.1] | True only with flag |
+| Trailing dot | user@example.com. | True only with rfc_1034 |
+
+### BVA (username length, max 64)
+| Length | Expected |
+|---|---|
+| 1, 63, 64 | True |
+| 65 | ValidationError |
+
+The domain length limit (253) is not tested because a valid 253-character
+domain is hard to build within the per-label limits.

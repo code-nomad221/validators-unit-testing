@@ -1,0 +1,12 @@
+test_id,email,expected
+TC01,user@example.com,valid
+TC02,first.last@example.com,valid
+TC03,user+tag@example.com,valid
+TC04,user@sub.example.com,valid
+TC05,userexample.com,invalid
+TC06,user@@example.com,invalid
+TC07,user@,invalid
+TC08,@example.com,invalid
+TC09,user name@example.com,invalid
+TC10,user@example,invalid
+TC11,user@example.org,valid

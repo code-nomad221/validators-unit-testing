@@ -1,3 +1,4 @@
+# pyright: basic
 """Unit tests for validators.between, written by Amna Wahab.
 
 Techniques used: ECP (equivalence classes) and BVA (boundary values).
@@ -8,6 +9,8 @@ from datetime import datetime
 import pytest
 
 from validators import ValidationError, between
+
+pytestmark = pytest.mark.group_between
 
 
 # ---------- ECP: one test per equivalence class ----------
@@ -58,6 +61,7 @@ def test_other_value_types_inside_range(value, min_val, max_val):
 
 # ---------- BVA: values at and around each boundary ----------
 
+@pytest.mark.bva
 @pytest.mark.parametrize(
     ("value", "should_pass"),
     [
@@ -78,17 +82,21 @@ def test_boundary_values(value, should_pass):
         assert isinstance(result, ValidationError)
 
 
+@pytest.mark.case_order(1)
 def test_min_equals_max():
     """BVA: when both limits are the same, only that value is valid."""
     assert between(10, min_val=10, max_val=10) is True
 
+
+# ---------- Error cases ----------
 
 def test_min_greater_than_max_returns_validation_error():
     """Docstring says ValueError, but the @validator wrapper returns
     a ValidationError instead. This test records the actual behaviour."""
     assert isinstance(between(15, min_val=20, max_val=10), ValidationError)
 
+
 def test_type_mismatch_returns_validation_error():
     """Docstring says TypeError, but the @validator wrapper returns
     a ValidationError instead. This test records the actual behaviour."""
-    assert isinstance(between("abc", min_val=10, max_val=20), ValidationError)   
+    assert isinstance(between("abc", min_val=10, max_val=20), ValidationError)

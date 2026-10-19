@@ -11,6 +11,8 @@ import pytest
 
 from validators import ValidationError, email
 
+pytestmark = pytest.mark.group_csv
+
 DATA_FILE = Path(__file__).parent / "data" / "email_test_data_amna.csv"
 
 

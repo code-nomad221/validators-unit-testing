@@ -1,3 +1,4 @@
+# pyright: basic
 """Unit tests for validators.email, written by Amna Wahab.
 
 Techniques used: ECP (valid and invalid format classes) and BVA (username
@@ -7,6 +8,8 @@ from reading the source and are confirmed by running these tests.
 import pytest
 
 from validators import ValidationError, email
+
+pytestmark = pytest.mark.group_email
 
 
 # ---------- ECP: valid classes ----------
@@ -55,6 +58,7 @@ def test_empty_or_missing_value_returns_validation_error(value):
 
 # ---------- BVA: username length limit (maximum 64) ----------
 
+@pytest.mark.bva
 @pytest.mark.parametrize(
     ("size", "should_pass"),
     [

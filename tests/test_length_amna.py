@@ -8,6 +8,8 @@ import pytest
 
 from validators import ValidationError, length
 
+pytestmark = pytest.mark.group_length
+
 
 # ---------- ECP: one test per equivalence class ----------
 
@@ -49,6 +51,7 @@ def test_empty_string_with_min_one_is_invalid():
 
 # ---------- BVA: lengths at and around each boundary ----------
 
+@pytest.mark.bva
 @pytest.mark.parametrize(
     ("size", "should_pass"),
     [

@@ -1,0 +1,13 @@
+test_id,text,min_val,max_val,expected
+TC01,keyboard,5,12,valid
+TC02,hi,5,12,invalid
+TC03,abcdefghijklmnopqrst,5,12,invalid
+TC04,abcd,5,12,invalid
+TC05,abcde,5,12,valid
+TC06,abcdefghijkl,5,12,valid
+TC07,abcdefghijklm,5,12,invalid
+TC08,python,3,,valid
+TC09,python,,3,invalid
+TC10,anything,,,valid
+TC11,,1,,invalid
+TC12,abcdefgh,5,12,valid

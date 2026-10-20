@@ -9,8 +9,7 @@
 GROUP_ORDER = ["group_between", "group_length", "group_email", "group_csv"]
 
 # All markers used by the test files.
-MARKERS = GROUP_ORDER + ["bva", "case_order(n): explicit run order inside a group"]
-
+MARKERS = GROUP_ORDER + ["bva", "ecp", "negative", "smoke", "case_order(n): explicit run order inside a group"]
 
 def pytest_configure(config):
     """Register the markers so pytest knows them."""

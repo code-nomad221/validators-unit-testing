@@ -12,6 +12,8 @@ import pytest
 
 from validators import ValidationError, length
 
+pytestmark = pytest.mark.group_csv
+
 DATA_FILE = Path(__file__).parent / "data" / "length_test_data_atifa.csv"
 
 

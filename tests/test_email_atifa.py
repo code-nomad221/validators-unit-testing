@@ -10,6 +10,8 @@ import pytest
 
 from validators import ValidationError, email
 
+pytestmark = pytest.mark.group_email
+
 
 def make_username(size):
     """Build a username with exactly `size` characters."""
@@ -24,6 +26,9 @@ def make_domain(total):
 
 # ---------- ECP: valid classes ----------
 
+@pytest.mark.ecp
+@pytest.mark.smoke
+@pytest.mark.case_order(1)
 @pytest.mark.parametrize(
     "address",
     [
@@ -42,6 +47,8 @@ def test_valid_addresses(address):
 
 # ---------- ECP: invalid classes ----------
 
+@pytest.mark.ecp
+@pytest.mark.negative
 @pytest.mark.parametrize(
     "address",
     [
@@ -67,6 +74,8 @@ def test_invalid_addresses(address):
     assert isinstance(email(address), ValidationError)
 
 
+@pytest.mark.ecp
+@pytest.mark.negative
 @pytest.mark.parametrize("address", ["", "   ", None])
 def test_empty_blank_or_missing(address):
     """ECP invalid class: empty, spaces only and None are rejected."""
@@ -75,6 +84,7 @@ def test_empty_blank_or_missing(address):
 
 # ---------- BVA: username length (maximum 64) ----------
 
+@pytest.mark.bva
 @pytest.mark.parametrize(
     ("size", "expected_ok"),
     [
@@ -93,12 +103,14 @@ def test_username_length_boundaries(size, expected_ok):
 
 # ---------- BVA: domain length (maximum 253) ----------
 
+@pytest.mark.bva
 def test_domain_length_just_above_limit():
     """BVA: a 254-character domain is rejected by the length check."""
     assert len(make_domain(254)) == 254
     assert isinstance(email("user@" + make_domain(254)), ValidationError)
 
 
+@pytest.mark.bva
 def test_domain_length_at_limit():
     """BVA predicted: a 253-character domain with valid labels passes."""
     assert len(make_domain(253)) == 253
@@ -107,12 +119,14 @@ def test_domain_length_at_limit():
 
 # ---------- Optional flags ----------
 
+@pytest.mark.ecp
 def test_simple_host_flag():
     """A host with no dot is rejected unless simple_host=True."""
     assert isinstance(email("admin@intranet"), ValidationError)
     assert email("admin@intranet", simple_host=True) is True
 
 
+@pytest.mark.ecp
 def test_ipv4_domain():
     """predicted: an IPv4 domain needs [brackets] and ipv4_address=True."""
     assert email("user@[10.0.0.1]", ipv4_address=True) is True
@@ -120,6 +134,7 @@ def test_ipv4_domain():
     assert isinstance(email("user@[10.0.0.1]"), ValidationError)
 
 
+@pytest.mark.ecp
 def test_ipv6_domain():
     """predicted: an IPv6 domain needs [brackets] and ipv6_address=True."""
     assert email("user@[2001:db8::2]", ipv6_address=True) is True

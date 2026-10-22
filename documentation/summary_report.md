@@ -17,7 +17,7 @@ We tested three modules: between, length and email. Each member wrote her own EC
 | Amna | documentation/notes_amna.md | tests/test_between_amna.py, test_length_amna.py, test_email_amna.py |
 | Atifa | documentation/notes_atifa.md | tests/test_between_atifa.py, test_length_atifa.py, test_email_atifa.py |
 
-Number of automated tests (Atifa): between <N1>, length <N2>, email <N3>, CSV <N4>.
+Number of automated tests (Atifa): between 22, length 23, email 34, CSV 12 (91 in total).
 Number of automated tests (Amna): between 19, length 20, email 24, CSV 11.
 
 Techniques used: Equivalence Class Partitioning (valid and invalid input classes) and Boundary Value Analysis (values at and around each limit, such as lengths 4, 5, 12 and 13 for a range of 5 to 12).
@@ -43,7 +43,7 @@ Adding a row to a CSV file creates a new test case without any code change.
 - Full commands: documentation/RUN_TESTS_atifa.md.
 
 ## 5. Results
-All tests pass: <TOTAL> passed (the original project tests plus our tests), including a parallel run with `-n auto`.
+All tests pass: 1278 passed in 2.43s (1113 original project tests, 74 tests by Amna and 91 tests by Atifa), including a parallel run with `pytest tests -n auto`.
 
 ## 6. Work distribution
 Each member worked in her own files, and the Git commit history shows each member's commits.
